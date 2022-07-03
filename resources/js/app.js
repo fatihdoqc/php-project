@@ -40,6 +40,7 @@ var dataSet = [
 $(document).ready(function () {
     $('#example').DataTable({
         data: dataSet,
+        dom: '<"top"i>rt<"bottom"flp><"clear">',
         columns: [
             { title: 'Name' },
             { title: 'Position' },
