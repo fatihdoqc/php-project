@@ -25,3 +25,4 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/users', [UserController::class, 'userList']);
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
