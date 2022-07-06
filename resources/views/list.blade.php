@@ -26,7 +26,7 @@
     </head>
     <body class="antialiased">
         <div id="datatable-wrapper">
-             <table id="example" class="display" width="100%"></table>
+            <table id="example" class="display" width="100%"></table>
 
         </div>
     </body>
