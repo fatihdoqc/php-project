@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('phone');
-            $table->string('email')->unique();
-            $table->string('logo_name')->unique();
+            $table->string('email');
+            $table->string('logo_name');
             $table->string('website');
             $table->timestamps();
         });

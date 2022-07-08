@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CompanyController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,12 +19,18 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/list' , function () {
-    return view('list');
-});
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/users', [UserController::class, 'userList']);
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+
+Route::get('/add-company' , [CompanyController::class , 'addCompany'])->name('company.add');
+Route::get('/save-company' , [CompanyController::class , 'saveCompany'])->name('company.save');
+Route::get('/update-company' , [CompanyController::class , 'updateCompany'])->name('company.update');
+Route::get('list' , [CompanyController::class , 'listCompany'])->name('company.list');
+Route::get('/edit-company/{id}' , [CompanyController::class , 'editCompany'])->name('company.edit');
+Route::get('/delete-company{id}' , [CompanyController::class , 'deleteCompany'])->name('company.delete');
+

@@ -26,8 +26,22 @@
     </head>
     <body class="antialiased">
         <div id="datatable-wrapper">
-            <table id="example" class="display" width="100%"></table>
+            <table id="example" class="display" width="100%">
 
+                @foreach ($posts as $item)
+                <tr>
+                    <td>{{ $item->id }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->address }}</td>
+                    <td>{{ $item->phone }}</td>
+                    <td>{{ $item->email }}</td>
+                    <td>{{ $item->website }}</td>
+                    <td><a class="btn btn-primary" href="/edit-company/{{$item->id}}">Edit</a>
+                        <a class="btn btn-danger" href="/delete-company/{{$item->id}}">Delete</a> </td>
+                </tr>
+                @endforeach
+
+            </table>
         </div>
     </body>
 </html>
