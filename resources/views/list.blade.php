@@ -26,6 +26,11 @@
     </head>
     <body class="antialiased">
         <div id="datatable-wrapper">
+            <h4>
+            @if (Session::has('company_status'))
+            <div class="alert alert-dark bg-dark text-white" role="alert">{{ Session::get('company_status') }}</div>
+            @endif
+            </h4>
             <table id="example" class="display" width="100%">
 
                 @foreach ($posts as $item)
@@ -43,6 +48,8 @@
 
             </table>
         </div>
+        <a class="btn btn-dark" href="/add-company">Add Company</a>
+
     </body>
 </html>
 @endsection

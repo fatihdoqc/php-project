@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,29 +23,36 @@ class CompanyController extends Controller
             'website' => $request->website
         ]);
 
-        return back()->with('company_add' , 'Company added successfully');
+        return redirect('list')->with('company_status','Company added successfully');
     }
     public function listCompany(){
         $posts = DB::table('companies')->get();
         return view('list' , compact('posts'));
     }
     public function editCompany($id){
-        $post = DB::table('companies')->where('id' , $id)->first();
+        $post = Company::find($id);
         return view('edit-company' , compact('post'));
     }
-    public function updateCompany(Request $request){
-        DB::table('companies')->where('id',$request->id)->update([
-            'name' => $request->name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'logo_name' => $request->logo_name,
-            'website' => $request->website
-        ]);
+    public function updateCompany(Request $request , $id ){
 
-        return back()->with('company_update' , 'Company updated successfully!');
+        $comp = Company::find($id);
+        $comp->name = $request->input('name');
+        $comp->address = $request->input('address');
+        $comp->phone = $request->input('phone');
+        $comp->email = $request->input('email');
+        $comp->logo_name = $request->input('logo_name');
+        $comp->website = $request->input('website');
+
+        $comp->update();
+        
+        
+        $posts = DB::table('companies')->get();
+        return redirect('list')->with('company_status','Company updated successfully');
+
     }
-    public function deleteCompany($id){
+    public function deleteCompany(Request $request){
 
+        DB::table('companies')->where('id', $request->id)->delete();
+        return back()->with('company_status','Company deleted successfuly');
     }
 }

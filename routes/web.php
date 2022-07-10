@@ -28,9 +28,10 @@ Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 
 Route::get('/add-company' , [CompanyController::class , 'addCompany'])->name('company.add');
-Route::get('/save-company' , [CompanyController::class , 'saveCompany'])->name('company.save');
-Route::get('/update-company' , [CompanyController::class , 'updateCompany'])->name('company.update');
 Route::get('list' , [CompanyController::class , 'listCompany'])->name('company.list');
 Route::get('/edit-company/{id}' , [CompanyController::class , 'editCompany'])->name('company.edit');
-Route::get('/delete-company{id}' , [CompanyController::class , 'deleteCompany'])->name('company.delete');
+Route::get('/delete-company/{id}' , [CompanyController::class , 'deleteCompany'])->name('company.delete');
+
+Route::get('/save-company' , [CompanyController::class , 'saveCompany'])->name('company.save');
+Route::put('update-company/{id}' , [CompanyController::class , 'updateCompany'])->name('company.update');
 
