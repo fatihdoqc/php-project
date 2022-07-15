@@ -25,9 +25,10 @@ class CompanyController extends Controller
 
         return redirect('list')->with('company_status','Company added successfully');
     }
-    public function listCompany(){
-        $posts = DB::table('companies')->get();
-        return view('list' , compact('posts'));
+    public function list(){
+        $companies = DB::table('companies')->get();
+        $employees = DB::table(('employees'))->get();
+        return view('list' , compact('companies' , 'employees'));
     }
     public function editCompany($id){
         $post = Company::find($id);
@@ -44,9 +45,7 @@ class CompanyController extends Controller
         $comp->website = $request->input('website');
 
         $comp->update();
-        
-        
-        $posts = DB::table('companies')->get();
+
         return redirect('list')->with('company_status','Company updated successfully');
 
     }

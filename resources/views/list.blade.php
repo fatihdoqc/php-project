@@ -25,15 +25,27 @@
         </style>
     </head>
     <body class="antialiased">
-        <div id="datatable-wrapper">
-            <h4>
-            @if (Session::has('company_status'))
-            <div class="alert alert-dark bg-dark text-white" role="alert">{{ Session::get('company_status') }}</div>
-            @endif
-            </h4>
-            <table id="example" class="display" width="100%">
+        <h4>
+        @if (Session::has('company_status'))
+        <div class="alert alert-dark bg-dark text-white" role="alert">{{ Session::get('company_status') }}</div>
+        @endif
+        </h4>
+        <table id="" class="display" width="100%">
 
-                @foreach ($posts as $item)
+            <thead>
+                <tr>
+                    <th> ID </th>
+                    <th> NAME </th>
+                    <th> ADDRESS </th>
+                    <th> PHONE </th>
+                    <th> EMAIL </th>
+                    <th> WEBSITE </th>
+                    <th> ACTION </th>
+                </tr>
+            </thead>
+
+            <tbody>
+            @foreach ($companies as $item)
                 <tr>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->name }}</td>
@@ -44,11 +56,60 @@
                     <td><a class="btn btn-primary" href="/edit-company/{{$item->id}}">Edit</a>
                         <a class="btn btn-danger" href="/delete-company/{{$item->id}}">Delete</a> </td>
                 </tr>
-                @endforeach
+            </tbody>
+            @endforeach
 
-            </table>
-        </div>
+        </table>
+
         <a class="btn btn-dark" href="/add-company">Add Company</a>
+
+        <br><br>
+
+        <h4>
+            @if (Session::has('employee_status'))
+            <div class="alert alert-dark bg-dark text-white" role="alert">{{ Session::get('employee_status') }}</div>
+            @endif
+            </h4>
+            <table id="" class="display" width="100%">
+                
+                <thead>
+                    <tr>
+                        <th> ID </th>
+                        <th> FIRST NAME </th>
+                        <th> LAST NAME </th>
+                        <th> PHONE </th>
+                        <th> EMAIL </th>
+                        <th> COMPANY NAME </th>
+                        <th> ACTION </th>
+                    </tr>
+                </thead>
+
+                @foreach ($employees as $emp)
+                <tr>
+                    <td>{{ $emp->id }}</td>
+                    <td>{{ $emp->first_name }}</td>
+                    <td>{{ $emp->last_name }}</td>
+                    <td>{{ $emp->phone }}</td>
+                    <td>{{ $emp->email }}</td>
+                    <?php                    
+                        foreach ($companies as $comp) {
+                            if ($comp->id == $emp->company_id) {
+                                ?>
+                                <td> {{ $comp->name }} </td>
+                                <?php
+                                break;
+                            }
+                        }
+                    
+                     ?>
+                    <td><a class="btn btn-primary" href="/edit-employee/{{$emp->id}}">Edit</a>
+                        <a class="btn btn-danger" href="/delete-employee/{{$emp->id}}">Delete</a> </td>
+                </tr>
+                @endforeach
+    
+            </table>
+    
+            <a class="btn btn-dark" href="/add-employee">Add Employee</a>
 
     </body>
 </html>
