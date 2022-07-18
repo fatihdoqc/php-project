@@ -30,11 +30,12 @@
         <div class="alert alert-dark bg-dark text-white" role="alert">{{ Session::get('company_status') }}</div>
         @endif
         </h4>
+        <h1 class="text-center" > COMPANY LIST </h1>
         <table id="" class="display" width="100%">
 
             <thead>
                 <tr>
-                    <th> ID </th>
+                    <th> COMPANY LOGO</th>
                     <th> NAME </th>
                     <th> ADDRESS </th>
                     <th> PHONE </th>
@@ -47,7 +48,7 @@
             <tbody>
             @foreach ($companies as $item)
                 <tr>
-                    <td>{{ $item->id }}</td>
+                    <td> <img src="{{ asset('storage/'.$item->logo_name); }}" width="100" height="100"></td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->address }}</td>
                     <td>{{ $item->phone }}</td>
@@ -56,15 +57,15 @@
                     <td><a class="btn btn-primary" href="/edit-company/{{$item->id}}">Edit</a>
                         <a class="btn btn-danger" href="/delete-company/{{$item->id}}">Delete</a> </td>
                 </tr>
-            </tbody>
             @endforeach
+            </tbody>
 
         </table>
 
         <a class="btn btn-dark" href="/add-company">Add Company</a>
 
         <br><br>
-
+        <h1 class="text-center"> EMPLOYEE LIST </h1>
         <h4>
             @if (Session::has('employee_status'))
             <div class="alert alert-dark bg-dark text-white" role="alert">{{ Session::get('employee_status') }}</div>
@@ -74,7 +75,7 @@
                 
                 <thead>
                     <tr>
-                        <th> ID </th>
+                        <th> </th>
                         <th> FIRST NAME </th>
                         <th> LAST NAME </th>
                         <th> PHONE </th>
@@ -86,7 +87,7 @@
 
                 @foreach ($employees as $emp)
                 <tr>
-                    <td>{{ $emp->id }}</td>
+                    <td></td>
                     <td>{{ $emp->first_name }}</td>
                     <td>{{ $emp->last_name }}</td>
                     <td>{{ $emp->phone }}</td>

@@ -33,7 +33,7 @@ Route::get('list' , [CompanyController::class , 'list'])->name('list');
 Route::get('/edit-company/{id}' , [CompanyController::class , 'editCompany'])->name('company.edit');
 Route::get('/delete-company/{id}' , [CompanyController::class , 'deleteCompany'])->name('company.delete');
 
-Route::get('/save-company' , [CompanyController::class , 'saveCompany'])->name('company.save');
+Route::put('save-company' , [CompanyController::class , 'saveCompany'])->name('company.save');
 Route::put('update-company/{id}' , [CompanyController::class , 'updateCompany'])->name('company.update');
 
 Route::get('/add-employee' , [EmployeeController::class , 'addEmployee'])->name('employee.add');

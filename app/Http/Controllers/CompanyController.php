@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class CompanyController extends Controller
 {
@@ -14,12 +15,25 @@ class CompanyController extends Controller
     }
     public function saveCompany(Request $request){
 
+
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'integer|nullable',
+            'photo'  => "dimensions:min_width=100,min_height=100",
+        ]);
+
+        $path = null;
+
+        if($request->hasFile('photo')){
+            $path = $request->file('photo')->storeAs('logos' , $request->name  .'.jpg' ,  'public');
+        }
+
         DB::table('companies')->insert([
             'name' => $request->name,
             'address' => $request->address,
             'phone' => $request->phone,
             'email' => $request->email,
-            'logo_name' => $request->logo_name,
+            'logo_name' => $path,
             'website' => $request->website
         ]);
 
@@ -35,13 +49,35 @@ class CompanyController extends Controller
         return view('edit-company' , compact('post'));
     }
     public function updateCompany(Request $request , $id ){
+        
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'integer',
+            'photo'  => 'dimensions:min_width=100,min_height=100'
+        ]);
+        
 
-        $comp = Company::find($id);
+
+        $comp = Company::find($id);   
+
+        if( $request->photo != null){
+
+            $path = 'storage/'.$comp->logo_name;
+
+            if( File::exists($path)){
+                File::delete($path);
+
+            }
+
+            $path = $request->file('photo')->storeAs('logos' , $request->name  .'.jpg' ,  'public');
+            $comp->logo_name = $path;
+
+        }
+
         $comp->name = $request->input('name');
         $comp->address = $request->input('address');
         $comp->phone = $request->input('phone');
         $comp->email = $request->input('email');
-        $comp->logo_name = $request->input('logo_name');
         $comp->website = $request->input('website');
 
         $comp->update();
@@ -51,7 +87,19 @@ class CompanyController extends Controller
     }
     public function deleteCompany(Request $request){
 
-        DB::table('companies')->where('id', $request->id)->delete();
+        $comp = Company::find($request->id);
+        $path = 'storage/'.$comp->logo_name;
+
+        if( File::exists($path)){
+            File::delete($path);
+            $comp->delete();
+
+        }
+        else{
+            return back()->with('company_status','Company couldn\'t be deleted, Logo does not exist');
+
+        }
+        
         return back()->with('company_status','Company deleted successfuly');
     }
 }
