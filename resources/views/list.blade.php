@@ -9,6 +9,10 @@
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>    
         <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
         <script src="js/people.js"> </script>
+        
+        @if ( !(Auth()->check()) )
+            <meta http-equiv="refresh" content="0; URL={{ url('/') }}" />
+        @endif
 
         <title>IPera</title>
 
@@ -25,6 +29,7 @@
         </style>
     </head>
     <body class="antialiased">
+        
         <h4>
         @if (Session::has('company_status'))
         <div class="alert alert-dark bg-dark text-white" role="alert">{{ Session::get('company_status') }}</div>

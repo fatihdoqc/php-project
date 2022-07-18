@@ -24,7 +24,12 @@
         </style>
     </head>
     <body class="antialiased">
-             <h1>HOME</h1>
+        @if (Auth()->check())
+            <h1> HOME </h1>
+        @else
+            <h1>Please login first</h1>
+        @endif
+
     </body>
 </html>
 @endsection
