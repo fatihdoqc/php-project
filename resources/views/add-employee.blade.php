@@ -14,26 +14,41 @@
                 </div>
         @endif
         
-        <div class="">
-            <form action="{{ url('save-employee') }}" method="POST">
-                @csrf
-                @method('PUT')
-                    First Name<span class="text-danger">*</span>
-                    <input class="form-control form-control-sm bg-white" type="text" name="first_name" value=""><br>
+        <form action="{{ url('save-employee') }}" method="POST">
+        <div class="card">
 
-                    Last Name<span class="text-danger">*</span>
-                    <input class="form-control form-control-sm bg-white" name="last_name" value=""> <br>
+            <h5 class="card-header d-flex justify-content-between align-items-center">
+                ADD EMPLOYEE
+                <input class="btn btn-sm btn-primary" type="submit" value="Submit">  
 
-                    Phone<span class="text-danger">*</span>
-                    <input class="form-control form-control-sm bg-white" type="text" name="phone" value=""><br>
+            </h5>
 
-                    Email<input class="form-control form-control-sm bg-white" type="text" name="email" value=""><br>
-
-                    Company Name<span class="text-danger">*</span>
-                    <input class="form-control form-control-sm bg-white" type="text" name="company_name" value=""><br>  
-
-                    <input class="btn btn-primary" type="submit" value="Submit">  
-            </form>
+            <div class="card-body">
+                
+                    @csrf
+                    @method('PUT')
+                        First Name<span class="text-danger">*</span>
+                        <input class="form-control form-control-sm bg-white" type="text" name="first_name" value=""><br>
+    
+                        Last Name<span class="text-danger">*</span>
+                        <input class="form-control form-control-sm bg-white" name="last_name" value=""> <br>
+    
+                        Phone<span class="text-danger">*</span>
+                        <input class="form-control form-control-sm bg-white" type="text" name="phone" value=""><br>
+    
+                        Email<input class="form-control form-control-sm bg-white" type="text" name="email" value=""><br>
+    
+                        Company Name<span class="text-danger">*</span>
+                        <select class="form-select" name="company_name" aria-label="Default select example">
+                            <option selected>Choose company</option>
+                            @foreach ($companies as $comp)
+                                <option value="{{ $comp->name }}"> {{ $comp->name }} </option>
+                            @endforeach                            
+                        </select>  
+    
+            </div>
+        </form>
+            
         </div>
     </body>
 @endsection

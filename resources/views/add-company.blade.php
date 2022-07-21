@@ -14,10 +14,19 @@
                 </div>
         @endif
 
-        <div class="">
-            <form action="{{ url('save-company') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
+        <form action="{{ url('save-company') }}" method="POST" enctype="multipart/form-data">
+
+            <div class="card">
+                <h5 class="card-header d-flex justify-content-between align-items-center">
+                    ADD COMPANY
+                    <input class="btn btn-sm btn-primary" type="submit" value="Submit">  
+    
+                </h5>
+    
+                <div class="card-body">
+                    
+                    @csrf
+                    @method('PUT')
                     Name<span class="text-danger">*</span>
                     <input class="form-control form-control-sm bg-white" type="text" name="name" value=""><br>
                     Address
@@ -26,8 +35,8 @@
                     Email<input class="form-control form-control-sm bg-white" type="text" name="email" value=""><br>
                     Logo <input type="file" name="photo" class="form-control-file"><br><br>
                     Website<input class="form-control form-control-sm bg-white" type="text" name="website" value=""><br>         
-                    <input class="btn btn-primary" type="submit" value="Submit">  
-            </form>
-        </div>
+            
+            </div>
+        </form>
     </body>
 @endsection

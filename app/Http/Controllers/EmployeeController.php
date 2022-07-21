@@ -11,8 +11,8 @@ use Illuminate\Validation\ValidationException;
 class EmployeeController extends Controller
 {
     public function addEmployee(){
-
-        return view('add-employee');
+        $companies = DB::table('companies')->get();
+        return view('add-employee' , compact('companies'));
     }
     public function store(Request $request){
 
