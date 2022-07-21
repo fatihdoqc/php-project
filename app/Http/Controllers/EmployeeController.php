@@ -14,13 +14,14 @@ class EmployeeController extends Controller
 
         return view('add-employee');
     }
-    public function saveEmployee(Request $request){
+    public function store(Request $request){
 
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'phone' => 'required|integer|nullable',
-            'company_name' => 'required'
+            'phone' => 'required|numeric|min:10|nullable',
+            'company_name' => 'required',
+            'email' => 'nullable|email:rfc,dns',
         ]);
 
         $employee = new Employee;
@@ -42,7 +43,12 @@ class EmployeeController extends Controller
 
         $employee->save();
 
-        return redirect('list')->with('employee_status','Employee added successfully');
+        return redirect('employee-list')->with('employee_status','Employee added successfully');
+    }
+    public function show(){
+        $employees = DB::table(('employees'))->get();
+        $companies = DB::table('companies')->get();
+        return view('employee-list' , compact('companies' , 'employees'));
     }
     public function editEmployee($id){
 
@@ -54,13 +60,14 @@ class EmployeeController extends Controller
 
         return view('edit-employee' , compact('post' , 'comp_name'));
     }
-    public function updateEmployee(Request $request , $id ){
+    public function update(Request $request , $id ){
 
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'phone' => 'required|integer|nullable',
-            'company_name' => 'required'
+            'phone' => 'required|numeric|min:10|nullable',
+            'company_name' => 'required',
+            'email' => 'nullable|email:rfc,dns'
         ]);
 
         $employee = Employee::find($id);
@@ -86,7 +93,7 @@ class EmployeeController extends Controller
         return redirect('list')->with('employee_status','Employee updated successfully');
 
     }
-    public function deleteEmployee(Request $request){
+    public function destroy(Request $request){
 
         DB::table('employees')->where('id', $request->id)->delete();
         return back()->with('employee_status','Employee deleted successfuly');

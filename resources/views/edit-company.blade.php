@@ -1,40 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>    
-        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-
-        <title>Edit company</title>
-
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    </head>
-
     <body class="antialiased text-left">
 
-        @foreach ( $errors->all() as $error)
-            <p class="text-center text-danger" > {{ $error }} </p>
-        @endforeach
+        @if($errors->any())
+                <div class="alert alert-danger">
+                    <p><strong>Opps Something went wrong</strong></p>
+                    <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                    </ul>
+                </div>
+        @endif
 
-        <div class="d-flex justify-content-center align-items-center">
+        <div class="">
             <form action="{{ url('update-company/'.$post->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <img  src=" {{ asset('storage/'.$post->logo_name); }}" width="100" height="100"><br>
-                name : <input class="form-control form-control-sm" type="text" name="name" value="{{ $post->name }}"><br>
-                address : <textarea class="form-control form-control-sm" name="address">{{ $post->address }}</textarea> <br>
-                phone : <input class="form-control form-control-sm" type="text" name="phone" maxlength="10" pattern="[1-9]{1}[0-9]{9}" value="{{ $post->phone }}"><br>
-                email : <input class="form-control form-control-sm" type="text" name="email" value="{{ $post->email }}"><br>
-                <input class="form-check-input" type="checkbox" id="checkLogo" checked >Update company logo <br>
+                Name <input class="form-control form-control-sm" type="text" name="name" value="{{ $post->name }}"><br>
+                Address <textarea class="form-control form-control-sm" name="address">{{ $post->address }}</textarea> <br>
+                Phone <input class="form-control form-control-sm" type="text" name="phone" value="{{ $post->phone }}"><br>
+                Email <input class="form-control form-control-sm" type="text" name="email" value="{{ $post->email }}"><br>
 
                 <input type="file" name="photo" id="photo" class="form-control-file"><br><br>
                 
-                website : <input class="form-control form-control-sm" type="text" name="website" value="{{ $post->website }}"><br>         
+                Website : <input class="form-control form-control-sm" type="text" name="website" value="{{ $post->website }}"><br>         
                 <input class="btn btn-primary" type="submit" value="Submit">  
             </form>
         </div>
@@ -42,17 +34,4 @@
         
     </body>
 
-    <script type="text/javascript">
-
-        $("#checkLogo").click(function () {
-            if ($(this).is(":checked")) {
-                $("#photo").show();
-            } else {
-                $("#photo").hide();
-            }
-        });
-
-    </script>
-
-</html>
 @endsection

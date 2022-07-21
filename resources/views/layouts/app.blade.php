@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="js/people.js"> </script>
     
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -22,7 +23,7 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar navbar-dark bg-dark shadow-sm">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -32,14 +33,16 @@
                     
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
                     @if (Auth()->check() )
-                    
-                        <a class="nav-link" href="\list">List</a>
+
+                    <ul class="navbar-nav me-auto">                
+                        <li> <a class="nav-link" href="\company-list">Company List</a> </li>
+                        <li> <a class="nav-link" href="\employee-list">Employee List</a> </li>
+                    </ul>
 
                     @endif
-                    </ul>
-                    <
+                    
+                    
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
@@ -48,16 +51,20 @@
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                         @else
-                            <span class="navbar-text h5">{{ Auth::user()->name }}</span>
+
+                            <span class="navbar-text">{{ Auth::user()->name }}</span>
                             <a class="nav-link" href="\logout"> Logout </a>
+
                         @endguest
                     </ul>
+
+
                 </div>
                 
             </div>
         </nav>
 
-        <main class="py-4">
+        <main>
             @yield('content')
         </main>
     </div>

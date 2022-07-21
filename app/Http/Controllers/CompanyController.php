@@ -13,13 +13,14 @@ class CompanyController extends Controller
 
         return view('add-company');
     }
-    public function saveCompany(Request $request){
+    public function store(Request $request){
 
 
         $request->validate([
             'name' => 'required',
-            'phone' => 'integer|nullable',
+            'phone' => 'numeric|min:10|nullable',
             'photo'  => "dimensions:min_width=100,min_height=100",
+            'email' => 'nullable|email:rfc,dns',
         ]);
 
         $path = null;
@@ -37,23 +38,23 @@ class CompanyController extends Controller
             'website' => $request->website
         ]);
 
-        return redirect('list')->with('company_status','Company added successfully');
+        return redirect('company-list')->with('company_status','Company added successfully');
     }
-    public function list(){
+    public function show(){
         $companies = DB::table('companies')->get();
-        $employees = DB::table(('employees'))->get();
-        return view('list' , compact('companies' , 'employees'));
+        return view('company-list' , compact('companies'));
     }
     public function editCompany($id){
         $post = Company::find($id);
         return view('edit-company' , compact('post'));
     }
-    public function updateCompany(Request $request , $id ){
+    public function update(Request $request , $id ){
         
         $request->validate([
             'name' => 'required',
-            'phone' => 'integer',
-            'photo'  => 'dimensions:min_width=100,min_height=100'
+            'phone' => 'numeric|min:10|nullable',
+            'photo'  => 'dimensions:min_width=100,min_height=100',
+            'email' => 'nullable|email:rfc,dns',
         ]);
         
 
@@ -82,24 +83,18 @@ class CompanyController extends Controller
 
         $comp->update();
 
-        return redirect('list')->with('company_status','Company updated successfully');
+        return redirect('company-list')->with('company_status','Company updated successfully');
 
     }
-    public function deleteCompany(Request $request){
+    public function destroy(Request $request){
 
         $comp = Company::find($request->id);
         $path = 'storage/'.$comp->logo_name;
 
         if( File::exists($path)){
             File::delete($path);
-            $comp->delete();
-
         }
-        else{
-            return back()->with('company_status','Company couldn\'t be deleted, Logo does not exist');
-
-        }
-        
+        $comp->delete();
         return back()->with('company_status','Company deleted successfuly');
     }
 }

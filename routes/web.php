@@ -17,30 +17,29 @@ use App\Http\Controllers\EmployeeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'] );
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/users', [UserController::class, 'userList']);
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 
 Route::get('/add-company' , [CompanyController::class , 'addCompany'])->name('company.add');
-Route::get('list' , [CompanyController::class , 'list'])->name('list');
+Route::get('company-list' , [CompanyController::class , 'show'])->name('company.show');
 Route::get('/edit-company/{id}' , [CompanyController::class , 'editCompany'])->name('company.edit');
-Route::get('/delete-company/{id}' , [CompanyController::class , 'deleteCompany'])->name('company.delete');
+Route::get('/delete-company/{id}' , [CompanyController::class , 'destroy'])->name('company.delete');
 
-Route::put('save-company' , [CompanyController::class , 'saveCompany'])->name('company.save');
-Route::put('update-company/{id}' , [CompanyController::class , 'updateCompany'])->name('company.update');
+Route::put('save-company' , [CompanyController::class , 'store'])->name('company.save');
+Route::put('update-company/{id}' , [CompanyController::class , 'update'])->name('company.update');
 
 Route::get('/add-employee' , [EmployeeController::class , 'addEmployee'])->name('employee.add');
-Route::put('save-employee' , [EmployeeController::class , 'saveEmployee'])->name('employee.update');
+Route::put('save-employee' , [EmployeeController::class , 'store'])->name('employee.update');
 
 Route::get('/edit-employee/{id}' , [EmployeeController::class , 'editEmployee'])->name('employee.edit');
-Route::put('update-employee/{id}' , [EmployeeController::class , 'updateEmployee'])->name('employee.update');
+Route::put('update-employee/{id}' , [EmployeeController::class , 'update'])->name('employee.update');
 
-Route::get('/delete-employee/{id}' , [EmployeeController::class , 'deleteEmployee'])->name('employee.delete');
+Route::get('/delete-employee/{id}' , [EmployeeController::class , 'destroy'])->name('employee.delete');
+
+Route::get('employee-list' , [EmployeeController::class , 'show'])->name('employee.show');
 
